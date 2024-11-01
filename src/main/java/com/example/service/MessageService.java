@@ -56,6 +56,17 @@ public class MessageService {
             }
         }
         throw new InvalidMessageRequestException("Message must be posted by existing user. Current postedBy is invalid.");
+    }
 
+    public Optional<Integer> deleteMessage(int messageId) {
+        Optional<Integer> rowsAffected = Optional.empty();
+
+        int rows = messageRepository.deleteByMessageId(messageId);
+
+        if (rows > 0) {
+            rowsAffected = Optional.of(rows);
+        }
+
+        return rowsAffected;
     }
 }
