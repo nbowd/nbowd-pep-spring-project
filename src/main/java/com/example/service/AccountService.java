@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -38,5 +39,18 @@ public class AccountService {
             }
         }
         this.accountRepository.save(newAccount);
+    }
+
+    public Optional<Account> login(Account loginAccount) {
+        Optional<Account> account = Optional.empty();
+
+        List<Account> accountList = accountRepository.findAll();
+
+        for (Account savedAccount: accountList) {
+            if (loginAccount.getUsername().equals(savedAccount.getUsername()) && loginAccount.getPassword().equals(savedAccount.getPassword())) {
+                account = Optional.of(savedAccount);
+            }
+        }
+        return account;
     }
 }

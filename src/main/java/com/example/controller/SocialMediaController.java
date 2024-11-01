@@ -1,5 +1,8 @@
 package com.example.controller;
 
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,14 +27,20 @@ public class SocialMediaController {
         this.accountService = accountService;
     }
 
-    @GetMapping("register")
-    public ResponseEntity<String> test() {
-        return ResponseEntity.ok().body("All is good.");
-    }
-
     @PostMapping("register")
     public ResponseEntity<Account> registerAccount(@RequestBody Account newAccount) {
         accountService.register(newAccount);
         return ResponseEntity.ok().body(newAccount);
+    }
+
+    @PostMapping("login")
+    public ResponseEntity<Account> loginAccount(@RequestBody Account loginAccount) {
+        Optional<Account> account = accountService.login(loginAccount);
+
+        if (account.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        return ResponseEntity.ok().body(account.get());
     }
 }
