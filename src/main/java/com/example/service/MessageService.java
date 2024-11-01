@@ -1,15 +1,13 @@
 package com.example.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.entity.Account;
 import com.example.entity.Message;
@@ -81,7 +79,13 @@ public class MessageService {
         Message message = messageRepository.findById(messageId).orElseThrow(() -> new InvalidMessageRequestException("Message must exist to edit. Current messageId is invalid."));
 
         message.setMessageText(messageText);
-        
+
         messageRepository.save(message);
+    }
+    
+    public List<Message> getMessagesFromAccount(int accountId) {
+        List<Message> accountMessages = messageRepository.findMessageByAccountId(accountId);
+
+        return accountMessages;
     }
 }

@@ -100,4 +100,11 @@ public class SocialMediaController {
         messageService.updateMessage(messageId, messageText);
         return ResponseEntity.ok().body(1);
     }
+
+    @GetMapping("accounts/{accountId}/messages")
+    public ResponseEntity<List<Message>> getAllMessageFromAccount(@PathVariable int accountId) {
+        List<Message> messageList = messageService.getMessagesFromAccount(accountId);
+
+        return ResponseEntity.ok().body(messageList);
+    }
 }
