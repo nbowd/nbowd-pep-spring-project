@@ -91,8 +91,10 @@ public class SocialMediaController {
     @PatchMapping("messages/{messageId}")
     public ResponseEntity<Integer> updateMessageById(@PathVariable int messageId, @RequestBody String bodyProperties) throws JsonProcessingException {
 
-        // I think there is a better way to do this with Spring Boot, but it looks like it involes some annotations in the Message model. But I didn't try them since we are not supposed to edit the models. I used this solution from my first project to parse a stringified JSON object.
-        // If there is a correct Spring Boot way to retrieve individual properties from a request body that doesn't involve Message model annotations, I would like to know for my own understanding. I couldn't find that info in the lessons, as we just covered retrieving full entities from the request body.
+        // I think there is a better way to do this with Spring Boot, but it looks like it involves some annotations in the Message model. 
+        // But I didn't try them since we are not supposed to edit the models. I used this solution from my first project to parse a stringified JSON object.
+        // If there is a correct Spring Boot way to retrieve individual properties from a request body that doesn't involve Message model annotations, I would like to know for my own understanding. 
+        // I couldn't find that info in the lessons, as we just covered retrieving fully formed entities from the request body and individual properties in the path/headers.
         ObjectMapper mapper = new ObjectMapper();
         JsonNode rootNode = mapper.readTree(bodyProperties);
         String messageText = rootNode.get("messageText").asText();

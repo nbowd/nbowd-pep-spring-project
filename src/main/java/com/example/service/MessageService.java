@@ -1,6 +1,5 @@
 package com.example.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,7 +81,7 @@ public class MessageService {
 
         messageRepository.save(message);
     }
-    
+
     public List<Message> getMessagesFromAccount(int accountId) {
         List<Message> accountMessages = messageRepository.findMessageByAccountId(accountId);
 
