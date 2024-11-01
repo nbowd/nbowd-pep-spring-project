@@ -58,7 +58,6 @@ public class MessageService {
         throw new InvalidMessageRequestException("Message must be posted by existing user. Current postedBy is invalid.");
     }
 
-
     public Optional<Integer> deleteMessage(int messageId) {
         Optional<Integer> rowsAffected = Optional.empty();
 
@@ -69,5 +68,20 @@ public class MessageService {
         }
 
         return rowsAffected;
+    }
+
+    public void updateMessage(int messageId, String messageText) {
+        if (messageText.equals("")) {
+            throw new InvalidMessageRequestException("Message text may not be blank.");
+        }
+        if (messageText.length() > 255) {
+            throw new InvalidMessageRequestException("Message text must be under 255 characters.");
+        }
+
+        Message message = messageRepository.findById(messageId).orElseThrow(() -> new InvalidMessageRequestException("Message must exist to edit. Current messageId is invalid."));
+
+        message.setMessageText(messageText);
+        
+        messageRepository.save(message);
     }
 }
