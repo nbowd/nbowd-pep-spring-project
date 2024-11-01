@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Account;
+import com.example.entity.Message;
 import com.example.service.AccountService;
+import com.example.service.MessageService;
 
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller using Spring. The endpoints you will need can be
@@ -22,9 +24,11 @@ import com.example.service.AccountService;
  @RestController
 public class SocialMediaController {
     private AccountService accountService;
+    private MessageService messageService;
 
-    public SocialMediaController(AccountService accountService) {
+    public SocialMediaController(AccountService accountService, MessageService messageService) {
         this.accountService = accountService;
+        this.messageService = messageService;
     }
 
     @PostMapping("register")
@@ -42,5 +46,11 @@ public class SocialMediaController {
         }
 
         return ResponseEntity.ok().body(account.get());
+    }
+
+    @PostMapping("messages")
+    public ResponseEntity<Message> createMessage(@RequestBody Message newMessage) {
+        messageService.createMessage(newMessage);
+        return ResponseEntity.ok().body(newMessage);
     }
 }

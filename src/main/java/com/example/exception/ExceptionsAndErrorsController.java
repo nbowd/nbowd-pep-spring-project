@@ -18,5 +18,11 @@ public class ExceptionsAndErrorsController {
     public String handleDuplicateUsername(DuplicateAccountUsernameException ex ) {
         return ex.getMessage();
     }
+
+    @ExceptionHandler(InvalidMessageRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleInvalidMessage(InvalidMessageRequestException ex) {
+        return ex.getMessage();
+    }
 }
 
