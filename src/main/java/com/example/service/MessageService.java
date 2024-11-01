@@ -28,6 +28,10 @@ public class MessageService {
         this.accountRepository = accountRepository;
     }
 
+    public List<Message> getMessageList() {
+        return messageRepository.findAll();
+    }
+
     public void createMessage(Message newMessage) {
         if (newMessage.getMessageText().equals("")) {
             throw new InvalidMessageRequestException("Message text may not be blank.");
