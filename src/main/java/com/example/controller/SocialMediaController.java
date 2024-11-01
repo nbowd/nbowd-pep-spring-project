@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,6 +53,17 @@ public class SocialMediaController {
     @GetMapping("messages")
     public ResponseEntity<List<Message>> getAllMessages() {
         return ResponseEntity.ok().body(messageService.getMessageList());
+    }
+
+    @GetMapping("messages/{messageId}")
+    public ResponseEntity<Message> findMessageById(@PathVariable int messageId) {
+        Optional<Message> message = messageService.getMessageById(messageId);
+
+        if (message.isEmpty()) {
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.ok().body(message.get());
     }
 
     @PostMapping("messages")

@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -30,6 +31,10 @@ public class MessageService {
 
     public List<Message> getMessageList() {
         return messageRepository.findAll();
+    }
+
+    public Optional<Message> getMessageById(int messageId) {
+        return messageRepository.findById(messageId);
     }
 
     public void createMessage(Message newMessage) {
